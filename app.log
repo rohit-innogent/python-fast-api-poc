@@ -1,0 +1,1 @@
+[2024-07-25 12:17:25,267] INFO in user_service: Retrieving users from the database with limit: 10, offset: 0, and direction: asc
