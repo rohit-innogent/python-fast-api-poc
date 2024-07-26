@@ -3,14 +3,22 @@ import logging
 from sqlalchemy import desc, asc
 from sqlalchemy.orm import Session
 
+from app.model import Role
 from app.model.user import User
+from app.schema.user import UserCreate
 
 logger = logging.getLogger(__name__)
 
 
-def create_user(db: Session, user):
+def create_user(db: Session, user_request: UserCreate):
     try:
-        user_obj = User(**user.model_dump())
+        # user_obj = User(**user.model_dump())
+        user_obj = User(**user_request.model_dump(exclude={"roles"}))
+        if user_request.roles:
+            # Fetch roles from the database based on the provided role names
+            roles = db.query(Role).filter(Role.role_name.in_(user_request.roles)).all()
+            logger.info(f"following logs fetched: {roles}")
+            user_obj.roles.extend(roles)
         db.add(user_obj)
         db.commit()
         db.refresh(user_obj)

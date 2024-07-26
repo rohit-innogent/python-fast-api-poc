@@ -49,8 +49,6 @@ async def get_post_by_id(post_id: int, db: Session = Depends(get_db)):
 async def get_all_posts(db: Session = Depends(get_db)):
     try:
         posts = post_service.get_all_posts(db)
-        if not posts:
-            raise HTTPException(status_code=404, detail="No posts found")
         return posts
     except Exception as ex:
         logger.error(f"Error fetching posts: {ex}")

@@ -1,22 +1,44 @@
-from typing import List
+from typing import List, TYPE_CHECKING
 
-from sqlalchemy import String, Integer, DateTime
+from sqlalchemy import String, Integer, DateTime, Column, ForeignKey, Table
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.config.base import Base
+# from app.model import Adhar
+
 from app.model.post import Post
 
+if TYPE_CHECKING:
+    from app.model.role import Role
+    from app.model.adhar import Adhar
 
+# Associate table for many-to-many relationship between user an post
+user_role = Table(
+    "user_role",
+    Base.metadata,
+    Column("user_id", ForeignKey("users.id")),
+    Column("role_id", ForeignKey("roles.id")),
+)
+
+# User is having one-to-one mapping with Adhar, one-to-many with Post and many-to-many with Role
 class User(Base):
     __tablename__ = 'users'
 
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
     username: Mapped[str] = mapped_column(String(30), unique=True)
     email: Mapped[str] = mapped_column(String(50), unique=True, nullable=False, index=True)
-    password: Mapped[str] = mapped_column(String(128), nullable=False)
+    password: Mapped[str] = mapped_column(String(20), nullable=False)
     age: Mapped[int] = mapped_column(Integer, nullable=False)
     is_active: Mapped[bool] = mapped_column(default=True)
+    # posts: Mapped[List["Post"]] = relationship('Post', back_populates="user")
     posts: Mapped[List["Post"]] = relationship()
+    roles: Mapped[List["Role"]] = relationship('Role', secondary=user_role, back_populates="users")
+    # adhar: Mapped["Adhar"] = relationship(back_populates="users")
+    adhar: Mapped["Adhar"] = relationship(back_populates="user")
+
+
+def __repr__(self):
+    return f'<User: {self.username}>'
 
 # Many-to-many relationship
 # Associate table for many-to-many relationship between user an post

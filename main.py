@@ -4,7 +4,8 @@ from fastapi import FastAPI
 
 from app.config.base import Base
 from app.config.database import engine
-from app.controller import user_controller, post_controller
+from app.controller import user_controller, post_controller, role_controller, adhar_controller, app_controller, \
+    app_request_controller
 import logging
 from app.config.logging_config import LOGGING_CONFIG
 from app.exception.custom_exceptions import UserNotFoundException, user_not_found_exception_handler
@@ -23,6 +24,11 @@ Base.metadata.create_all(bind=engine)
 
 app.include_router(user_controller.router, prefix="/user", tags=["user"])
 app.include_router(post_controller.router, prefix="/post", tags=["post"])
+app.include_router(role_controller.router, prefix="/role", tags=["role"])
+app.include_router(adhar_controller.router, prefix="/adhar", tags=["adhar"])
+app.include_router(app_controller.router, prefix="/app", tags=["app"])
+app.include_router(app_request_controller.router, prefix="/app_request", tags=["app_request"])
+
 
 app.add_exception_handler(UserNotFoundException, user_not_found_exception_handler)
 

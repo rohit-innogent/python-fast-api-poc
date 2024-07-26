@@ -56,8 +56,6 @@ async def get_all_users(
 ):
     try:
         users = user_service.get_all_users(db, limit=limit, offset=offset, direction=direction)
-        if not users:
-            raise HTTPException(status_code=404, detail="No users found")
         return users
     except Exception as ex:
         logger.error(f"Error fetching users: {ex}")

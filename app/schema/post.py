@@ -1,8 +1,5 @@
 from typing import List, Optional
-
 from pydantic import BaseModel
-
-from app.model.post import Post
 
 
 class PostBase(BaseModel):
@@ -17,6 +14,13 @@ class PostCreate(PostBase):
 class PostResponse(PostBase):
     id: int
     user_id: int
+
+    class Config:
+        from_attributes = True
+
+
+class PostResponseForUser(PostBase):
+    id: int
 
     class Config:
         from_attributes = True
