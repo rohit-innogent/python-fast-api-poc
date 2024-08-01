@@ -34,7 +34,7 @@ sudo service nginx restart
 
 Clone the repository and change branch to **fast-api-poc**
 ```bash
-https://github.com/rohit-innogent/python-fast-api-poc.git
+git clone https://github.com/rohit-innogent/python-fast-api-poc.git
 
 git checkout fast-api-poc
 ```
