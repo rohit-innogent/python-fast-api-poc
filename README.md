@@ -32,16 +32,16 @@ Start NGINX
 sudo service nginx restart
 ```
 
-Clone the repository and change branch to **fast-api-poc**
+Clone the repository
 ```bash
 git clone https://github.com/rohit-innogent/python-fast-api-poc.git
-
-git checkout fast-api-poc
 ```
 
 Start application
 ```bash
 cd python-fast-api-poc
+
+git checkout fast-api-poc
 
 pip install -r requirements.txt
 
