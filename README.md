@@ -32,12 +32,14 @@ Start NGINX
 sudo service nginx restart
 ```
 
-Clone the FastAPI server app
+Clone the repository and change branch to **fast-api-poc**
 ```bash
 https://github.com/rohit-innogent/python-fast-api-poc.git
+
+git checkout fast-api-poc
 ```
 
-Start FastAPI
+Start application
 ```bash
 cd python-fast-api-poc
 
