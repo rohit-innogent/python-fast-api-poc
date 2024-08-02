@@ -51,4 +51,5 @@ python -m uvicorn main:app
 Video link for reference [click to open link](https://www.youtube.com/watch?v=SgSnz7kW-Ko)
 
 ## Video link to deploy application without nginx
-Link: [Click](https://www.youtube.com/watch?v=_719QPPARUw)
+Link: [Video link](https://www.youtube.com/watch?v=_719QPPARUw)
+Link: [GitHub link](https://github.com/smurfcoders/fastapi-hosting)
