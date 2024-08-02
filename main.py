@@ -6,7 +6,7 @@ from app.config.base import Base
 from app.config.database import engine
 from app.routers import user_router, post_router, role_router, aadhar_router, app_router as app_router, app_request_router
 import logging
-from app.config.logging_config import LOGGING_CONFIG
+from app.config.logging.logging_config import LOGGING_CONFIG
 from app.custom_exceptions.custom_exceptions import UserNotFoundException, not_found_exception_handler, \
     user_not_found_exception_handler, NotFoundException
 

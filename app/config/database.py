@@ -1,8 +1,12 @@
+import logging
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from app.config.profiles.config import get_settings
 
-URL_DATABASE = 'mysql+pymysql://root:root@localhost:3306/fast_api'
+logger = logging.getLogger(__name__)
+settings = get_settings()
 
-engine = create_engine(URL_DATABASE)
-
+logger.info(f"Database URL: {settings.DATABASE_URL}")
+engine = create_engine(settings.DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
