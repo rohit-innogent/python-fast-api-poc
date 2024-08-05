@@ -10,28 +10,6 @@ sudo apt-get update
 sudo apt install -y python3-pip nginx
 ```
 
-Add the FastAPI configuration to NGINX's folder. Create a file called fastapi_nginx .
-
-```bash
-sudo vim /etc/nginx/sites-enabled/fastapi_nginx
-```
-
-And put this config into the file (replace the IP address with your EC2 instance's public IP):
-```bash
-server {
-    listen 80;   
-    server_name <YOUR_EC2_IP>;    
-    location / {        
-        proxy_pass http://127.0.0.1:8000;    
-    }
-}
-```
-
-Start NGINX
-```bash
-sudo service nginx restart
-```
-
 Clone the repository
 ```bash
 git clone https://github.com/rohit-innogent/python-fast-api-poc.git
@@ -48,8 +26,6 @@ pip install -r requirements.txt
 python -m uvicorn main:app
 ```
 
-Video link for reference [click to open link](https://www.youtube.com/watch?v=SgSnz7kW-Ko)
-
-## Video link to deploy application without nginx
-Link: [Video link](https://www.youtube.com/watch?v=_719QPPARUw)
-Link: [GitHub link](https://github.com/smurfcoders/fastapi-hosting)
+### Video link to deploy application on AWS EC2
+Youtube: [Video link](https://www.youtube.com/watch?v=_719QPPARUw)
+GitHub repo link : [GitHub link](https://github.com/smurfcoders/fastapi-hosting)
