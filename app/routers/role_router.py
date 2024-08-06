@@ -1,11 +1,12 @@
 import logging
-from typing import List
+from typing import List, Annotated
 
 from fastapi import APIRouter, status, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from app.config.database import SessionLocal
 from app.schemas.role import RoleResponse, RoleCreate
+from app.security.auth import get_current_user
 from app.services import role_service
 
 router = APIRouter()
@@ -21,6 +22,9 @@ def get_db():
         db.close()
 
 
+user_dependency = Annotated[dict, Depends(get_current_user)]
+
+
 @router.post("/create_role", response_model=dict, status_code=status.HTTP_201_CREATED)
 async def create_user(role_request: RoleCreate, db: Session = Depends(get_db)):
     try:
@@ -30,8 +34,9 @@ async def create_user(role_request: RoleCreate, db: Session = Depends(get_db)):
 
 
 @router.get("/get_all", response_model=List[RoleResponse], status_code=status.HTTP_200_OK)
-async def get_all_roles(db: Session = Depends(get_db)):
+async def get_all_roles(user: user_dependency, db: Session = Depends(get_db)):
     try:
+        logger.info(f"user validated successfully: {user}")
         roles = role_service.get_all_roles(db)
         return roles
     except Exception as ex:

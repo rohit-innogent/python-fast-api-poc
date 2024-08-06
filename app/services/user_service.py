@@ -1,19 +1,27 @@
 import logging
 from typing import Type
 
+from passlib.context import CryptContext
 from sqlalchemy.orm import Session
 
 from app.custom_exceptions.custom_exceptions import UserNotFoundException
 from app.models import User
-from app.repositories import user_repository
+from app.repositories import user_repository, role_repository
 from app.schemas.user import UserCreate
 
 logger = logging.getLogger(__name__)
 
+bcrypt_context = CryptContext(schemes=['bcrypt'], deprecated='auto')
+
 
 def create_user(db: Session, request_body: UserCreate) -> dict:
     try:
-        user_obj = user_repository.create_user(db, request_body)
+        user_obj = User(**request_body.model_dump(exclude={"roles", "password"}))
+        if request_body.roles:
+            roles = role_repository.get_roles_by_role_names(db, request_body.roles)
+            user_obj.roles.extend(roles)
+        user_obj.hashed_password = bcrypt_context.hash(request_body.password)
+        user_obj = user_repository.create_user(db, user_obj)
         logger.info(f"User created successfully with email: {user_obj.email}")
         return {"details": "User created successfully"}
     except Exception as ex:
